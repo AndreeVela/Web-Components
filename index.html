@@ -1,10 +1,14 @@
+<!DOCTYPE html>
 <html>
 	<head>
-		<title>HTML5 ROCKS</title>				
+		<title>HTML5 ROCKS</title>						
 	</head>
 	
 	<body>
-		<div id="nameTag"></div>
+		<div id="nameTag">Andree</div>			
+		<p>
+			<input id="newName" /><button id="changeNameBtn">Update</button>
+		</p>
 		<template id="nameTagTemplate">
 			<style>
 			.outer {
@@ -35,16 +39,24 @@
 					Hi! My name is
 				</div>
 				<div class="name">
-					Bob
+					<content></content>
 				</div>
 			</div>
 		</template>
 		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 		<script>
 		var shadow = document.querySelector( '#nameTag' ).createShadowRoot();
 		var template = document.querySelector( '#nameTagTemplate' );
 		var clone = document.importNode( template.content, true );
 		shadow.appendChild( clone );
+		
+		function changeName(){						
+			document.querySelector( '#nameTag' ).textContent = 
+				document.querySelector( '#newName' ).value;
+		}
+		
+		document.querySelector( '#changeNameBtn' ).setAttribute( 'onclick', 'changeName()' );		
 		</script>
 	</body>
 	
