@@ -5,10 +5,11 @@
 	</head>
 	
 	<body>
-		<div id="nameTag">Andree</div>			
-		<p>
-			<input id="newName" /><button id="changeNameBtn">Update</button>
-		</p>
+		<div id="nameTag">
+			<div class="firstName">Andree</div>
+			<div>Vela</div>
+			<div class="email">ivela@nic.mx</div>
+		</div>			
 		<template id="nameTagTemplate">
 			<style>
 			.outer {
@@ -16,8 +17,8 @@
 			  border-radius: 1em;
 			  background: red;
 			  font-size: 20pt;
-			  width: 12em;
-			  height: 7em;
+			  width: 15em;
+			  height: 15em;
 			  text-align: center;
 			}
 			.boilerplate {
@@ -39,7 +40,15 @@
 					Hi! My name is
 				</div>
 				<div class="name">
-					<content></content>
+					<div style="color:black;">
+						<content select=".firstName"></content>
+					</div>
+					<div style="color:green;">
+						<content select="div"></content>
+					</div>
+					<div style="color:orange;">
+						<content select=".email"></content>
+					</div>
 				</div>
 			</div>
 		</template>
