@@ -4,12 +4,12 @@
 		<title>HTML5 ROCKS</title>						
 	</head>
 	
-	<body>
-		<div id="nameTag">
-			<div class="firstName">Andree</div>
-			<div>Vela</div>
-			<div class="email">ivela@nic.mx</div>
-		</div>			
+	<body>		
+		<x-tag 
+			firstname="Francisco"
+			lastname="Moreno"
+			email="foo@nic.mx"/>
+		
 		<template id="nameTagTemplate">
 			<style>
 			.outer {
@@ -54,18 +54,36 @@
 		</template>
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-		<script>
-		var shadow = document.querySelector( '#nameTag' ).createShadowRoot();
-		var template = document.querySelector( '#nameTagTemplate' );
-		var clone = document.importNode( template.content, true );
-		shadow.appendChild( clone );
+		<script>		
 		
-		function changeName(){						
-			document.querySelector( '#nameTag' ).textContent = 
-				document.querySelector( '#newName' ).value;
+		var tagProto = Object.create( HTMLElement.prototype );
+		Object.defineProperty( tagProto, 'tagname', { 
+			writable: true, 
+			value: 'Andree' ,
+			enumerable: true
+		} ); 
+		
+		tagProto.createdCallback = function(){
+			var divName = document.createElement( 'div' );
+			divName.innerHTML = this.getAttribute( 'firstname' );			
+			divName.className = 'firstName';			
+			this.appendChild( divName );
+			
+			var divLastname = document.createElement( 'div' );			
+			divLastname.innerHTML = this.getAttribute( 'lastname' )
+			this.appendChild( divLastname );
+			
+			var divEmail = document.createElement( 'div' );
+			divEmail.className = 'email';
+			divEmail.innerHTML = this.getAttribute( 'email' )
+			this.appendChild( divEmail );
+						
+			var template = document.querySelector( '#nameTagTemplate' );
+			var clone  = document.importNode( template.content, true );
+			this.createShadowRoot().appendChild( clone );			
 		}
 		
-		document.querySelector( '#changeNameBtn' ).setAttribute( 'onclick', 'changeName()' );		
+		var Tag = document.registerElement( 'x-tag', { prototype: tagProto } );		
 		</script>
 	</body>
 	
